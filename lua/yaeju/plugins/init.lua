@@ -22,6 +22,7 @@ end
 
 require("yaeju.plugins.cmp")
 require("yaeju.plugins.lsp")
+require("yaeju.plugins.tools")
 require("yaeju.plugins.pairs")
 require("yaeju.plugins.finder")
 require("yaeju.plugins.search")

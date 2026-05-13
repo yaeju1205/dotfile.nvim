@@ -52,3 +52,4 @@ vim.opt.wildignore:append({ "*/.git/*", "*/.hg/*", "*/.svn/*", "*/.DS_Store" })
 
 vim.opt.grepprg = "rg --vimgrep --smart-case --column"
 vim.opt.grepformat = "%f:%l:%c:%m"
+

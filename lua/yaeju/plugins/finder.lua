@@ -1,6 +1,8 @@
 vim.plugin.namespace("yaeju-finder", function()
     vim.plugin.install("ibhagwan/fzf-lua")(function()
-        require("fzf-lua").setup({
+        local fzf_lua = require("fzf-lua")
+
+        fzf_lua.setup({
             winopts = {
                 backdrop = 70,
                 border = "single",
@@ -24,25 +26,42 @@ vim.plugin.namespace("yaeju-finder", function()
                     }
                 }
             },
-            fzf_opts = {
-                ["--color"] = ([[
-                    fg:#B49FA3,
-                    bg:-1,
-                    hl:#B38B9B,
-                    fg+:#D6C1C5,
-                    bg+:#302D31,
-                    hl+:#C58EA7,
-                    pointer:#A381A3,
-                    info:#665B66,
-                    prompt:#B38B9B,
-                    marker:#C07BC0
-                ]]):gsub("\n", ""):gsub(" ", "")
-            }
         })
 
-        local fzf_lua = require("fzf-lua")
-
         vim.keymap.set("n", "<leader>fg", fzf_lua.live_grep, { desc = "FZF Live Grep" })
-        vim.keymap.set("n", "<leader>ff", fzf_lua.files, { desc = "FZF Files" })
+        vim.keymap.set("n", "<leader>ff", function()
+            fzf_lua.files({
+                fd_opts = string.gsub([[
+                    --color=never --type f --hidden --follow
+                    --exclude .git
+                    --exclude target
+                ]], "\n", ""),
+                find_opts = string.gsub([[
+                    -type f
+                    -not -path '*/.git/*'
+                    -not -path '*/target/*'
+                ]], "\n", ""),
+            })
+        end, { desc = "FZF Files" })
+    end)
+
+    vim.plugin.install("stevearc/oil.nvim")(function()
+        local oil = require("oil")
+
+        oil.setup({
+            keymaps = {
+                ["<esc>"] = { "actions.close", mode = "n" },
+            },
+            float = {
+                padding = 2,
+                border = "single",
+                win_options = {
+                    winhighlight = "NormalFloat:Normal,FloatBorder:Normal",
+                    winblend = 0,
+                },
+            },
+        })
+
+        vim.keymap.set("n", "-", oil.open_float, { desc = "Open parent directory" })
     end)
 end)
