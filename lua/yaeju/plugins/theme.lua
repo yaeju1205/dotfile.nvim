@@ -1,10 +1,10 @@
 vim.plugin.namespace("yaeju-theme", function()
-    -- vim.plugin.disable_namespace("yaeju-theme-sakura")
+    vim.plugin.disable_namespace("yaeju-theme-sakura")
     vim.plugin.namespace("yaeju-theme-sakura", function()
         vim.plugin.install("anAcc22/sakura.nvim", {
             requires = {
                 { origin = "rktjmp/lush.nvim" },
-                { origin = "nvim-lualine/lualine.nvim" }
+                { origin = "nvim-lualine/lualine.nvim" },
             }
         })(function()
             vim.cmd.colorscheme("sakura")
@@ -50,6 +50,19 @@ vim.plugin.namespace("yaeju-theme", function()
     vim.plugin.namespace("yaeju-theme-koda", function()
         vim.plugin.install("oskarnurm/koda.nvim")(function()
             vim.cmd.colorscheme("koda")
+        end)
+    end)
+
+    vim.plugin.namespace("yaeju-theme-kanagawa", function()
+        vim.plugin.install("rebelot/kanagawa.nvim")(function()
+            vim.cmd.colorscheme("kanagawa-dragon")
+        end)
+    end)
+
+    vim.plugin.disable_namespace("yaeju-theme-mellifluous")
+    vim.plugin.namespace("yaeju-theme-mellifluous", function()
+        vim.plugin.install("ramojus/mellifluous.nvim")(function()
+            vim.cmd.colorscheme("mellifluous")
         end)
     end)
 end)
