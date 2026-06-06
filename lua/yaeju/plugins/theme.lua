@@ -1,22 +1,11 @@
 vim.plugin.namespace("yaeju-theme", function()
-    vim.plugin.disable_namespace("yaeju-theme-sakura")
     vim.plugin.namespace("yaeju-theme-sakura", function()
         vim.plugin.install("anAcc22/sakura.nvim", {
             requires = {
                 { origin = "rktjmp/lush.nvim" },
-                { origin = "nvim-lualine/lualine.nvim" },
             }
         })(function()
             vim.cmd.colorscheme("sakura")
-
-            require("lualine").setup({
-                options = require("lualine.themes.sakura"),
-                sections = {
-                    lualine_c = {
-                        { "filename", path = 3 }
-                    }
-                }
-            })
 
             require("fzf-lua").setup({
                 fzf_opts = {
@@ -60,6 +49,7 @@ vim.plugin.namespace("yaeju-theme", function()
         end)
     end)
 
+    vim.plugin.disable_namespace("yaeju-theme-kanagawa")
     vim.plugin.namespace("yaeju-theme-kanagawa", function()
         vim.plugin.install("rebelot/kanagawa.nvim")(function()
             vim.cmd.colorscheme("kanagawa-dragon")
