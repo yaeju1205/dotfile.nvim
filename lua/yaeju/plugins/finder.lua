@@ -1,4 +1,19 @@
 vim.plugin.namespace("yaeju-finder", function()
+    local ignore_files = {
+        ".gitignore",
+        ".zig-cache",
+        "target",
+        "node_modules",
+    }
+
+    local fd_ignore_opt = " "
+    local find_ignore_opt = " "
+
+    for _, file in pairs(ignore_files) do
+        fd_ignore_opt = fd_ignore_opt .. "--exclude " .. file .. " "
+        find_ignore_opt = find_ignore_opt .. "-not -path '*/" .. file .. "/*' "
+    end
+
     vim.plugin.install("ibhagwan/fzf-lua")(function()
         local fzf_lua = require("fzf-lua")
 
@@ -31,17 +46,17 @@ vim.plugin.namespace("yaeju-finder", function()
         vim.keymap.set("n", "<leader>fg", fzf_lua.live_grep, { desc = "FZF Live Grep" })
         vim.keymap.set("n", "<leader>ff", function()
             fzf_lua.files({
-                fd_opts = string.gsub([[
-                    --color=never --type f --hidden --follow
-                    --exclude .git
-                    --exclude target
-                    --exclude .zig-cache
-                ]], "\n", ""),
-                find_opts = string.gsub([[
-                    -type f
-                    -not -path '*/.git/*'
-                    -not -path '*/target/*'
-                ]], "\n", ""),
+                fd_opts = string.gsub(
+                    "--color=never --type f --hidden --follow"
+                    .. fd_ignore_opt,
+                    "\n",
+                    ""
+                ),
+                find_opts = string.gsub(
+                    "-type f" .. find_ignore_opt,
+                    "\n",
+                    ""
+                ),
             })
         end, { desc = "FZF Files" })
     end)
@@ -52,10 +67,11 @@ vim.plugin.namespace("yaeju-finder", function()
         oil.setup({
             view_options = {
                 is_always_hidden = function(name)
-                    return
-                        name == ".git" or
-                        name == "node_modules" or
-                        name == "target"
+                    for _, file in pairs(ignore_files) do
+                        if name == file then
+                            return true
+                        end
+                    end
                 end,
                 show_hidden = true,
             },
