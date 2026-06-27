@@ -33,6 +33,8 @@ vim.plugin.namespace("yaeju-statusline", function()
             local file_path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":p:.")
 
             local diag_count = vim.diagnostic.count()
+            local error_count, warn_count = diag_count[1], diag_count[2]
+            error_count, warn_count = error_count or 0, warn_count or 0
 
             local branch = vim.b.gitsigns_status_dict
             local branch_text = ""
@@ -47,9 +49,9 @@ vim.plugin.namespace("yaeju-statusline", function()
                 file_icon_text .. " " .. file_path,
                 "%m%r",
                 "%=",
-                highlight_string("DiagnosticError", "  " .. (diag_count[1] or 0)),
+                highlight_string("DiagnosticError", "  " .. error_count),
                 "  ",
-                highlight_string("DiagnosticWarn", "  " .. (diag_count[2] or 0)),
+                highlight_string("DiagnosticWarn", "  " .. warn_count),
                 " ",
                 " " .. file_icon_text .. " " .. file_type .. " ",
                 " %p%% ",
