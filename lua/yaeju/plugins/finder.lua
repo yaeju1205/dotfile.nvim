@@ -35,6 +35,7 @@ vim.plugin.namespace("yaeju-finder", function()
                     --color=never --type f --hidden --follow
                     --exclude .git
                     --exclude target
+                    --exclude .zig-cache
                 ]], "\n", ""),
                 find_opts = string.gsub([[
                     -type f
@@ -50,12 +51,13 @@ vim.plugin.namespace("yaeju-finder", function()
 
         oil.setup({
             view_options = {
-                is_always_hidden = function(name, bufnr)
-                    return 
+                is_always_hidden = function(name)
+                    return
                         name == ".git" or
                         name == "node_modules" or
                         name == "target"
                 end,
+                show_hidden = true,
             },
             keymaps = {
                 ["<esc>"] = { "actions.close", mode = "n" },

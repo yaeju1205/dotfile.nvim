@@ -3,12 +3,13 @@ vim.opt.fileformat = "unix"
 vim.opt.fileformats = "unix"
 
 vim.opt.mouse = "a"
+vim.o.mousemoveevent = true
 
 vim.opt.termguicolors = true
 
 vim.opt.wrap = false
 vim.opt.cursorline = true
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 5
 
 vim.opt.updatetime = 500
 
