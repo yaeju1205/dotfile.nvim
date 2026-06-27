@@ -1,6 +1,6 @@
 vim.plugin.namespace("yaeju-finder", function()
     local ignore_files = {
-        ".gitignore",
+        ".git",
         ".zig-cache",
         "target",
         "node_modules",
@@ -41,6 +41,9 @@ vim.plugin.namespace("yaeju-finder", function()
                     }
                 }
             },
+            diagnostics = {
+                multiline = true,
+            }
         })
 
         vim.keymap.set("n", "<leader>fg", fzf_lua.live_grep, { desc = "FZF Live Grep" })
@@ -59,6 +62,8 @@ vim.plugin.namespace("yaeju-finder", function()
                 ),
             })
         end, { desc = "FZF Files" })
+        vim.keymap.set('n', '<leader>fb', fzf_lua.diagnostics_document, { desc = "Buffer Diagnostics" })
+        vim.keymap.set('n', '<leader>fd', fzf_lua.diagnostics_workspace, { desc = "Workspace Diagnostics" })
     end)
 
     vim.plugin.install("stevearc/oil.nvim")(function()

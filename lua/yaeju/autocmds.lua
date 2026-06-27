@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = { "*.rs" },
+    pattern = { "*.rs", "*.go" },
     callback = function()
         vim.lsp.buf.format({ async = false })
         vim.snippet.stop()

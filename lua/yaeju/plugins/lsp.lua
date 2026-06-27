@@ -5,6 +5,7 @@ vim.plugin.namespace("yaeju-lsp", function()
         "rust_analyzer",
         "tsgo",
         "luau_lsp",
+        "gopls",
         "zls"
     }
 
